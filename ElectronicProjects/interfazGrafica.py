@@ -48,40 +48,48 @@ screen = pg.display.set_mode((800, 600))
 running = True
 pg.Surface.fill(screen, colorFondo)
 font = pg.font.Font(None, 36)
+
 i = 0
+statusPuente = "Detenido"
+
 pg.draw.rect(screen, colorBotonArriba, botonArriba, 0)
 pg.draw.rect(screen, colorBotonAbajo, botonAbajo, 0)
 pg.draw.rect(screen, colorIlustracion, ilustracion, 0)
+
 
 while running == True:
     pg.display.flip()
     mousex, mousey = pg.mouse.get_pos()
     click = pg.mouse.get_pressed(num_buttons=5)
     if mousex > xBut[0] and mousex < xBut[0] + anBut and mousey > yBut and mousey < yBut + alBut:
-        status = "bajada"
+        statusMouse = "bajada"
     elif mousex > xBut[1] and mousex < xBut[1] + anBut and mousey > yBut and mousey < yBut + alBut:
-        status = "subida"
+        statusMouse = "subida"
     else: 
-        status = "noValid"
+        statusMouse = "noValid"
 
     key = pg.key.get_pressed()
 
-    if key[pg.K_w] or (status == "subida" and click == (1,0,0,0,0)):
+    if (key[pg.K_w] or (statusMouse == "subida" and click == (1,0,0,0,0))) and statusPuente == "Detenido":
         varText = font.render("Arriba", True, (0,0,0))
         screen.blit(varText, (350,100))
         i = 0
+        statusPuente = "Subiendo"
        # foward()
-    elif key[pg.K_s] or (status == "bajada" and click == (1,0,0,0,0)):
+    elif (key[pg.K_s] or (statusMouse == "bajada" and click == (1,0,0,0,0))) and statusPuente == "Detenido":
         varText = font.render("Abajo", True, (0,0,0))
         screen.blit(varText, (350,100))
         i = 0
+        statusPuente = "Bajando"
        # backward()
     elif key[pg.K_a] :
         varText = font.render("Detener", True, (0,0,0))
-        screen.blit(varText, (350,100))
-       # stop()
-    elif i == 30:
+        '''screen.blit(varText, (350,100))
+        #stop()'''
+    elif i == 300:
         pg.Surface.fill(screen, colorFondo)
+        #stop()
+        statusPuente = "Detenido"
         pg.draw.rect(screen, colorBotonArriba, botonArriba, 0)
         pg.draw.rect(screen, colorBotonAbajo, botonAbajo, 0)
         pg.draw.rect(screen, colorIlustracion, ilustracion, 0)
