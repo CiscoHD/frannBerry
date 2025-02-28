@@ -3,7 +3,7 @@ from time import sleep
 import pygame as pg
 
 pg.init()
-#Mensaje de Ercik, cuando lo pruebes en la franberry2 recuerda descomentar todo lo relacionado a pines gpio
+
 '''
 input1 = gpio.DigitalOutputDevice(14)
 input2 = gpio.DigitalOutputDevice(15)
