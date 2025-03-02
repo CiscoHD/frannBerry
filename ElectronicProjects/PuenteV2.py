@@ -1,12 +1,15 @@
 import gpiozero as gpio
 from time import sleep
 
-input1 = gpio.DigitalOutputDevice(14)
-input2 = gpio.DigitalOutputDevice(15)
+output1 = gpio.DigitalOutputDevice(14)
+output2 = gpio.DigitalOutputDevice(15)
 enable1 = gpio.PWMOutputDevice(18) #Motor1
 enable2 = gpio.PWMOutputDevice(13) #Motor2
 
-servo = gpio.Servo(17, min_pulse_width=0.5/1000, max_pulse_width=2.5/1000)
+servo = gpio.Servo(23, min_pulse_width=0.5/1000, max_pulse_width=2.5/1000)
+
+up_arrived = gpio.Button(2)
+down_arrived = gpio.Button(3)
 
 def menu():
     print("-----Puente de elevación-------")
@@ -18,31 +21,19 @@ def menu():
     print("e) Salir")
     return input("Ingresa una opción: ").lower()
 
-def moverPlataforma(opcion):
-    if opcion == 'w':
-        cerrar_pluma()
-        print("Elevando plataforma")
-        enable1.value = 1
-        enable2.value = 1  
-        input1.on()
-        input2.off()
-    elif opcion == 's':
-        print("Bajando plataforma")
-        enable1.value = 1
-        enable2.value = 1
-        input1.off()
-        input2.on()
-        abrir_pluma()
-    elif opcion == 'a':
-        enable1.value = float(input("velocidad del motor 1 ")) / 10
-    elif opcion == 'd':
-        enable2.value = float(input("velocidad del motor 2 ")) / 10
-    elif opcion == 'q':
-        print("Motor detenido")
-        input1.off()
-        input2.off()
-    else:
-        print("Opción invalida")
+def elevar_plataforma():
+    print("Elevando plataforma")
+    enable1.value = 1
+    enable2.value = 1  
+    output1.on()
+    output2.off()
+
+def bajar_plataforma():
+    print("Bajando plataforma")
+    enable1.value = 1
+    enable2.value = 1
+    output1.off()
+    output2.on()
 
 def abrir_pluma():
     """Mueve el servomotor de 0° a 90° simulando la apertura de la pluma."""
@@ -60,15 +51,29 @@ try:
     while True: 
         sentido = menu()
         if sentido != 'e':
-            moverPlataforma(sentido)
+            if sentido == 'w' and not up_arrived.is_pressed:
+                elevar_plataforma()
+                cerrar_pluma()
+            elif up_arrived.is_pressed:
+                print("La plataforma ya está arriba")
+            if sentido == 's' and not down_arrived.is_pressed: 
+                bajar_plataforma()
+            elif down_arrived.is_pressed:
+                print("La plataforma ya está abajo")
+            elif sentido == 'q':
+                print("Motor detenido")
+                output1.off()
+                output2.off()
         else : 
             break
+        if down_arrived == 1:
+            abrir_pluma()    
 except KeyboardInterrupt:
     print("Interrupción del usuario")
 
 finally:
     print("Finalizando programa")
-    input1.off()
-    input2.off()
+    output1.off()
+    output2.off()
     enable1.value = 0
     enable2.value = 0
