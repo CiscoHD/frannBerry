@@ -94,14 +94,14 @@ while running == True:
     click = pg.mouse.get_pressed()
 
     if buttonPress(mousePos[0], mousePos[1], buttons[0], statusPuente):
-        if click[0] == 1:
+        if click[0] == 1 and statusPuente == "Abajo":
             platformUp()
             closeServo()
             statusPuente = "Moviendose"
             drawText("Subiendo", 350, 200, textColor)
     
     elif buttonPress(mousePos[0], mousePos[1], buttons[1], statusPuente):
-        if click[0] == 1:
+        if click[0] == 1 and statusPuente == "Arriba":
             platformDown()
             statusPuente = "Moviendose"
             drawText("Bajando", 350, 200, textColor)
