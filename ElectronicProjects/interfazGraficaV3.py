@@ -90,7 +90,7 @@ def drawText (texto, x, y, color):
     screen.blit(varText, (x, y))
 
 while running == True:
-    mousePos = pg.mouse.get.pos()
+    mousePos = pg.mouse.get_pos()
     click = pg.mouse.get_pressed()
 
     if buttonPress(mousePos[0], mousePos[1], buttons[0], statusPuente):
