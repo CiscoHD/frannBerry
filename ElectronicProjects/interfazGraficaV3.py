@@ -76,13 +76,13 @@ def stoppedPosition():
     return platformStatus()
     
 
-def buttonPress(mouseX, mouseY, butX, butY, butW, butH, status):
-    if mouseX > butX and mouseX < butX + butW and status != "Moviendose":
-        if mouseY > butY and mouseY < butY + butH :
+def buttonPress(mouseX, mouseY, button, status):
+    if mouseX > button[0] and mouseX < button[0] + button[2] and status == "Detenido":
+        if mouseY > button[1] and mouseY < button[1] + button[3]:
             return True
         else:
             return False
-    else: 
+    else:
         return False
 
 def drawText (texto, x, y, color):
