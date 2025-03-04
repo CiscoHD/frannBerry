@@ -26,7 +26,7 @@ def elevar_plataforma():
         print("⚠️ La plataforma ya está arriba")
         return
     
-    print("⏫ Elevando plataforma...")
+    print("Elevando plataforma...")
     enable1.value = 1
     enable2.value = 1
     output1.on()
@@ -38,7 +38,7 @@ def bajar_plataforma():
         print("⚠️ La plataforma ya está abajo")
         return
     
-    print("⏬ Bajando plataforma...")
+    print("Bajando plataforma...")
     enable1.value = 1
     enable2.value = 1
     output1.off()
@@ -46,7 +46,7 @@ def bajar_plataforma():
 
 def detener_motores():
     """Apaga los motores."""
-    print("🛑 Motores detenidos")
+    print("Motores detenidos")
     enable1.value = 0
     enable2.value = 0
     output1.off()
@@ -54,24 +54,24 @@ def detener_motores():
 
 def abrir_pluma():
     """Mueve el servomotor de 0° a 90° simulando la apertura de la pluma."""
-    print("🟢 Pluma abierta (90°)")
+    print("Pluma abierta (90°)")
     servo.value = 0  # Posición intermedia (90°)
     sleep(1)
 
 def cerrar_pluma():
     """Mueve el servomotor de 90° a 0° simulando el cierre de la pluma."""
-    print("🔴 Pluma cerrada (0°)")
+    print("Pluma cerrada (0°)")
     servo.value = -1  # Mitad del recorrido (-0.5 equivale a 0° en este caso)
     sleep(1)
 
 # Detectar si la plataforma llegó al tope
 def detectar_limites():
     if up_arrived.is_pressed:
-        print("✅ Plataforma arriba")
+        print("Plataforma arriba")
         detener_motores()
     
     if down_arrived.is_pressed:
-        print("✅ Plataforma abajo, abriendo pluma...")
+        print("Plataforma abajo, abriendo pluma...")
         detener_motores()
         abrir_pluma()
 
@@ -91,14 +91,14 @@ try:
         elif opcion == 'e':
             break
         else:
-            print("⚠️ Opción inválida, intenta de nuevo.")
+            print("Opción inválida, intenta de nuevo.")
         up_arrived.when_pressed = detectar_limites
         down_arrived.when_pressed = detectar_limites
 
 except KeyboardInterrupt:
-    print("\n🛑 Interrupción del usuario")
+    print("\nInterrupción del usuario")
 
 finally:
-    print("🔻 Finalizando programa, apagando motores y cerrando pluma...")
+    print("Finalizando programa, apagando motores y cerrando pluma...")
     detener_motores()
     cerrar_pluma()

@@ -45,14 +45,14 @@ def moverPlataforma(opcion):
         print("Opción invalida")
 
 def abrir_pluma():
-    """Mueve el servomotor de 0° a 90° simulando la apertura de la pluma."""
-    print("🟢 Pluma abierta (90°)")
+    #Mueve el servomotor de 0° a 90° simulando la apertura de la pluma.
+    print("Pluma abierta (90°)")
     servo.value = 0  # Posición intermedia (90°)
     sleep(1)
 
 def cerrar_pluma():
-    """Mueve el servomotor de 90° a 0° simulando el cierre de la pluma."""
-    print("🔴 Pluma cerrada (0°)")
+    #Mueve el servomotor de 90° a 0° simulando el cierre de la pluma.
+    print("Pluma cerrada (0°)")
     servo.value = -1  # Mitad del recorrido (-0.5 equivale a 0° en este caso)
     sleep(1)
 
